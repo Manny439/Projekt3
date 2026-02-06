@@ -139,6 +139,7 @@ namespace ConsoleApp1
             else
             {
                 Console.WriteLine("Neplatné ID.");
+            }
         }
     }
 }
