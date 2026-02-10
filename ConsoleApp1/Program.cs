@@ -7,22 +7,10 @@ using System.Threading.Tasks;
 namespace ConsoleApp1
 {
     internal class Program
-    {
-        Tady je kompletní a upravený Program.cs.Upravil jsem volbu pro adopci i vyhledávání tak, aby se tě program ptal srozumitelně a nemusela se zadávat žádná "a/n" písmena.
-
-Všechno je napsané maximálně jednoduše, bez složitých konstrukcí a bez komentářů.
-
-C#
-using System;
-
-namespace ConsoleApp1
-    {
-        internal class Program
-        {
+    {   
             static void Main(string[] args)
             {
                 Evidence evidence = new Evidence();
-                evidence.NacistZakladniData();
                 bool konec = false;
 
                 while (!konec)
