@@ -28,3 +28,5 @@ Učeň - Evidence se mi celkem povedla, jsem rád že program funguje sám o sob
 Rusler - Zvire funguje dobře. (https://github.com/Manny439/Projekt3/pull/1/changes/c38fb1fa25bd945731a903dc39e026a9ba1d410a)
 
 Vejmelka - Program funguje. 
+
+Zehnal- chyb moc nebylo, ale byly problémy s třídou zvíře, kterou jem opravil tak aby fungoval, zbytek byly jen malé drobnosti
