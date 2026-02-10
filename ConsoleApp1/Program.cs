@@ -8,137 +8,140 @@ namespace ConsoleApp1
 {
     internal class Program
     {
-        static void Main(string[] args)
-        {
-            Evidence evidence = new Evidence();
-            bool konec = false;
+        Tady je kompletní a upravený Program.cs.Upravil jsem volbu pro adopci i vyhledávání tak, aby se tě program ptal srozumitelně a nemusela se zadávat žádná "a/n" písmena.
 
-            while (!konec)
+Všechno je napsané maximálně jednoduše, bez složitých konstrukcí a bez komentářů.
+
+C#
+using System;
+
+namespace ConsoleApp1
+    {
+        internal class Program
+        {
+            static void Main(string[] args)
             {
-                Console.WriteLine("\n===== ÚTULEK PRO ZVÍŘATA =====");
-                Console.WriteLine("1) Přidat zvíře");
-                Console.WriteLine("2) Vypsat všechna zvířata");
-                Console.WriteLine("3) Vyhledat / filtrovat");
-                Console.WriteLine("4) Označit adopci");
-                Console.WriteLine("5) Statistiky");
-                Console.WriteLine("0) Konec");
+                Evidence evidence = new Evidence();
+                evidence.NacistZakladniData();
+                bool konec = false;
+
+                while (!konec)
+                {
+                    Console.WriteLine("\n===== HLAVNÍ MENU ÚTULKU =====");
+                    Console.WriteLine("1) Přidat nové zvíře");
+                    Console.WriteLine("2) Vypsat všechna zvířata");
+                    Console.WriteLine("3) Vyhledat zvíře");
+                    Console.WriteLine("4) Zaznamenat adopci");
+                    Console.WriteLine("5) Zobrazit statistiky");
+                    Console.WriteLine("0) Ukončit program");
+                    Console.Write("Vaše volba: ");
+
+                    string volba = Console.ReadLine();
+
+                    switch (volba)
+                    {
+                        case "1":
+                            PridaniZvirete(evidence);
+                            break;
+                        case "2":
+                            evidence.VypisVse();
+                            break;
+                        case "3":
+                            Vyhledavani(evidence);
+                            break;
+                        case "4":
+                            OznaceniAdopce(evidence);
+                            break;
+                        case "5":
+                            evidence.Statistiky();
+                            break;
+                        case "0":
+                            konec = true;
+                            break;
+                        default:
+                            Console.WriteLine("Neplatná volba, zkuste to znovu.");
+                            break;
+                    }
+                }
+            }
+
+            static void PridaniZvirete(Evidence evidence)
+            {
+                Console.WriteLine("\n--- ZADÁVÁNÍ NOVÉHO ZVÍŘETE ---");
+                Console.Write("Jméno: ");
+                string jmeno = Console.ReadLine();
+                Console.Write("Druh: ");
+                string druh = Console.ReadLine();
+
+                int vek;
+                while (true)
+                {
+                    Console.Write("Věk (číslo): ");
+                    if (int.TryParse(Console.ReadLine(), out vek) && vek >= 0) break;
+                    Console.WriteLine("Chyba: Zadejte platný věk jako číslo.");
+                }
+
+                Console.Write("Pohlaví: ");
+                string pohlavi = Console.ReadLine();
+                Console.Write("Zdravotní stav: ");
+                string stav = Console.ReadLine();
+                Console.Write("Poznámka: ");
+                string poznamka = Console.ReadLine();
+
+                evidence.PridatZvire(jmeno, druh, vek, pohlavi, stav, poznamka);
+            }
+
+            static void Vyhledavani(Evidence evidence)
+            {
+                Console.WriteLine("\n--- MOŽNOSTI VYHLEDÁVÁNÍ ---");
+                Console.WriteLine("1) Hledat podle druhu");
+                Console.WriteLine("2) Hledat podle jména");
+                Console.WriteLine("3) Hledat podle věku");
                 Console.Write("Volba: ");
 
                 string volba = Console.ReadLine();
 
-                switch (volba)
+                if (volba == "1")
                 {
-                    case "1":
-                        PridaniZvirete(evidence);
-                        break;
+                    Console.Write("Zadejte druh zvířete: ");
+                    evidence.VyhledatPodleDruhu(Console.ReadLine());
+                }
+                else if (volba == "2")
+                {
+                    Console.Write("Zadejte jméno zvířete: ");
+                    evidence.VyhledatPodleJmena(Console.ReadLine());
+                }
+                else if (volba == "3")
+                {
+                    Console.Write("Zadejte věk pro porovnání: ");
+                    if (int.TryParse(Console.ReadLine(), out int vek))
+                    {
+                        Console.WriteLine("Chcete najít zvířata:");
+                        Console.WriteLine("1) Mladší nebo stejně stará");
+                        Console.WriteLine("2) Starší nebo stejně stará");
+                        Console.Write("Volba: ");
 
-                    case "2":
-                        evidence.VypisVse();
-                        break;
+                        string smer = Console.ReadLine();
+                        bool mensi = (smer == "1");
 
-                    case "3":
-                        Vyhledavani(evidence);
-                        break;
-
-                    case "4":
-                        OznaceniAdopce(evidence);
-                        break;
-
-                    case "5":
-                        evidence.Statistiky();
-                        break;
-
-                    case "0":
-                        konec = true;
-                        break;
-
-                    default:
-                        Console.WriteLine("Neplatná volba.");
-                        break;
+                        evidence.VyhledatPodleVeku(vek, mensi);
+                    }
                 }
             }
 
-            Console.WriteLine("Aplikace ukončena.");
-        }
-
-        static void PridaniZvirete(Evidence evidence)
-        {
-            Console.Write("Jméno: ");
-            string jmeno = Console.ReadLine();
-
-            Console.Write("Druh (pes/kočka/jiné): ");
-            string druh = Console.ReadLine();
-
-            int vek;
-            while (true)
+            static void OznaceniAdopce(Evidence evidence)
             {
-                Console.Write("Věk: ");
-                if (int.TryParse(Console.ReadLine(), out vek) && vek >= 0)
-                    break;
+                Console.WriteLine("\n--- ZAZNAMENÁNÍ ADOPCE ---");
+                Console.Write("Zadejte unikátní ID zvířete: ");
 
-                Console.WriteLine("Zadejte platný věk (0 a více).");
-            }
-
-            Console.Write("Pohlaví: ");
-            string pohlavi = Console.ReadLine();
-
-            Console.Write("Zdravotní stav: ");
-            string stav = Console.ReadLine();
-
-            Console.Write("Poznámka (nepovinné): ");
-            string poznamka = Console.ReadLine();
-
-            evidence.PridatZvire(jmeno, druh, vek, pohlavi, stav, poznamka);
-        }
-
-        static void Vyhledavani(Evidence evidence)
-        {
-            Console.WriteLine("\n--- VYHLEDÁVÁNÍ ---");
-            Console.WriteLine("1) Podle druhu");
-            Console.WriteLine("2) Podle jména");
-            Console.WriteLine("3) Podle věku");
-            Console.Write("Volba: ");
-
-            string volba = Console.ReadLine();
-
-            switch (volba)
-            {
-                case "1":
-                    Console.Write("Zadej druh: ");
-                    evidence.VyhledatPodleDruhu(Console.ReadLine());
-                    break;
-
-                case "2":
-                    Console.Write("Zadej jméno: ");
-                    evidence.VyhledatPodleJmena(Console.ReadLine());
-                    break;
-
-                case "3":
-                    Console.Write("Zadej věk: ");
-                    int vek = int.Parse(Console.ReadLine());
-
-                    Console.Write("Menší nebo rovno? (a/n): ");
-                    bool mensi = Console.ReadLine().ToLower() == "a";
-
-                    evidence.VyhledatPodleVeku(vek, mensi);
-                    break;
-
-                default:
-                    Console.WriteLine("Neplatná volba.");
-                    break;
+                if (int.TryParse(Console.ReadLine(), out int id))
+                {
+                    evidence.OznacitAdopci(id);
+                }
+                else
+                {
+                    Console.WriteLine("Chyba: ID musí být celé číslo.");
+                }
             }
         }
-
-        static void OznaceniAdopce(Evidence evidence)
-        {
-            Console.Write("Zadej ID zvířete: ");
-            if (int.TryParse(Console.ReadLine(), out int id))
-            {
-                evidence.OznacitAdopci(id);
-            }
-            else
-            {
-                Console.WriteLine("Neplatné ID.");
-        }
-    }
 }
