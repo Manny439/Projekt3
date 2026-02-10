@@ -18,7 +18,8 @@ namespace ConsoleApp1
         public DateTime DatumPrijmu { get; set; }
         public string ZdravotniStav { get; set; }
         public string Poznamka { get; set; }
-        public Zvire(string jmeno, string druh, int vek, string pohlavi, DateTime datumprijmu, string zdravotnistav, string poznamka = "")
+        public string Adopce { get; set; }
+        public Zvire(string jmeno, string druh, int vek, string pohlavi, DateTime datumprijmu, string zdravotnistav, string poznamka = "", string adopce ="")
         {
             ID = Cislovac++;
             Jmeno = jmeno;
@@ -28,11 +29,12 @@ namespace ConsoleApp1
             DatumPrijmu = datumprijmu;
             ZdravotniStav = zdravotnistav;
             Poznamka = poznamka;
+            Adopce = adopce;
         }
 
         public override string ToString()
         {
-            return $"ID: {ID}, Jmeno: {Jmeno}, Druh: {Druh}, Věk: {Vek}, Pohlaví: {Pohlavi}, Datum příjmu: {DatumPrijmu:dd.MM.yyyy}, Zdravotní stav: {ZdravotniStav}, Poznámka: {Poznamka}";
+            return $"ID: {ID}, Jmeno: {Jmeno}, Druh: {Druh}, Věk: {Vek}, Pohlaví: {Pohlavi}, Datum příjmu: {DatumPrijmu:dd.MM.yyyy}, Zdravotní stav: {ZdravotniStav}, Poznámka: {Poznamka}, Adopce: {Adopce}";
         }
     }
 }

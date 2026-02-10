@@ -9,39 +9,108 @@ namespace ConsoleApp1
     internal class Evidence
     {
         private List<Zvire> seznamZvirat = new List<Zvire>();
+
         public void PridatZvire(string jmeno, string druh, int vek, string pohlavi, string stav, string poznamka)
         {
-            Zvire nove = new Zvire(jmeno, druh, vek, pohlavi, DateTime.Now, stav, poznamka);
+            Zvire nove = new Zvire(jmeno, druh, vek, pohlavi, DateTime.Now, stav, poznamka, "K adopci");
             seznamZvirat.Add(nove);
-            Console.WriteLine($"Zvíře {jmeno} bylo úspěšně uloženo.");
+            Console.WriteLine("Uloženo.");
         }
+
         public void VypisVse()
         {
-            Console.WriteLine("\n--- PŘEHLED ZVÍŘAT V ÚTULKU ---");
             if (seznamZvirat.Count == 0)
             {
-                Console.WriteLine("Útulek je prázdný.");
+                Console.WriteLine("Prázdno.");
                 return;
             }
 
-            foreach (var zvire in seznamZvirat)
+            foreach (Zvire z in seznamZvirat)
             {
-                Console.WriteLine(zvire.ToString());
+                Console.WriteLine(z.ToString());
             }
         }
+
         public void VyhledatPodleDruhu(string druh)
         {
-            var vysledek = seznamZvirat.Where(z => z.Druh.Equals(druh, StringComparison.OrdinalIgnoreCase)).ToList();
+            bool nalezeno = false;
+            foreach (Zvire z in seznamZvirat)
+            {
+                if (z.Druh.ToLower() == druh.ToLower())
+                {
+                    Console.WriteLine(z.ToString());
+                    nalezeno = true;
+                }
+            }
+            if (!nalezeno) Console.WriteLine("Nenalezeno.");
+        }
 
-            Console.WriteLine($"\n--- VÝSLEDKY VYHLEDÁVÁNÍ ({druh}) ---");
-            if (vysledek.Count == 0)
+        public void VyhledatPodleJmena(string jmeno)
+        {
+            bool nalezeno = false;
+            foreach (Zvire z in seznamZvirat)
             {
-                Console.WriteLine("Žádné takové zvíře nenalezeno.");
+                if (z.Jmeno.ToLower().Contains(jmeno.ToLower()))
+                {
+                    Console.WriteLine(z.ToString());
+                    nalezeno = true;
+                }
             }
-            else
+            if (!nalezeno) Console.WriteLine("Nenalezeno.");
+        }
+
+        public void VyhledatPodleVeku(int vek, bool mensi)
+        {
+            bool nalezeno = false;
+            foreach (Zvire z in seznamZvirat)
             {
-                foreach (var z in vysledek) Console.WriteLine(z.ToString());
+                if ((mensi && z.Vek <= vek) || (!mensi && z.Vek >= vek))
+                {
+                    Console.WriteLine(z.ToString());
+                    nalezeno = true;
+                }
             }
+            if (!nalezeno) Console.WriteLine("Nenalezeno.");
+        }
+
+        public void OznacitAdopci(int id)
+        {
+            foreach (Zvire z in seznamZvirat)
+            {
+                if (z.ID == id)
+                {
+                    z.Adopce = "Adoptován";
+                    Console.WriteLine("Změněno.");
+                    return;
+                }
+            }
+            Console.WriteLine("Nenalezeno.");
+        }
+
+        public void Statistiky()
+        {
+            if (seznamZvirat.Count == 0) return;
+
+            int soucetVeku = 0;
+            int adoptovani = 0;
+
+            foreach (Zvire z in seznamZvirat)
+            {
+                soucetVeku += z.Vek;
+                if (z.Adopce == "Adoptován") adoptovani++;
+            }
+
+            double prumer = (double)soucetVeku / seznamZvirat.Count;
+
+            Console.WriteLine($"Celkem: {seznamZvirat.Count}");
+            Console.WriteLine($"Průměrný věk: {prumer:F1}");
+            Console.WriteLine($"Adoptovaní: {adoptovani}");
+        }
+
+        public void NacistZakladniData()
+        {
+            PridatZvire("Alík", "Pes", 3, "Samec", "Zdravý", "");
+            PridatZvire("Micka", "Kočka", 1, "Samice", "V útulku", "");
         }
     }
 }
