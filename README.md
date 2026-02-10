@@ -26,3 +26,5 @@ Naklonovat v visual studio a spustit, menu uživatele navede na možnosti
 Učeň - Evidence se mi celkem povedla, jsem rád že program funguje sám o sobě. (https://github.com/Manny439/Projekt3/pull/4/changes/72db884ce42f9f5dae2f284ab8f62beab924f834)
 
 Rusler - Zvire funguje dobře. (https://github.com/Manny439/Projekt3/pull/1/changes/c38fb1fa25bd945731a903dc39e026a9ba1d410a)
+
+Vejmelka - Program funguje. 
